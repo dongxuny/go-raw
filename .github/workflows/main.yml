@@ -2,20 +2,21 @@ name: Create Comment
 
 on:
   issues:
-    types: [labeled]
+    types: 'xx'
 
 jobs:
   create-comment:
     runs-on: ubuntu-latest
     if: github.event.label.name == 'xxx'
     steps:
-      - name: Create comment
-        uses: actions-cool/issues-helper@v3
+      - name: WeChat Work notification by text
+        uses: chf007/action-wechat-work@master
+        env:
+          WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
-          actions: 'create-comment'
-          token: ${{ secrets.GIT_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Hello ${{ github.event.issue.user.login }}. Add some comments.
-
-            你好 ${{ github.event.issue.user.login }}。巴拉巴拉。
+          msgtype: markdown
+          content: "## Issue notification\n
+          > **Repository:** <font color=\"comment\">${{ github.repository }}</font> \n
+          > **Issue:** <font color=\"comment\">${{ github.event.issue.html_url }}</font> \n
+          > **Title:** <font color=\"comment\">${{ github.event.issue.title }}</font>"
+          mentioned_list: '["lark","shengyu"]'
