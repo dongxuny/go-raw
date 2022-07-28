@@ -2,7 +2,7 @@ name: Create Comment
 
 on:
   issues:
-    types: 'xx'
+    types: [created, edited]
 
 jobs:
   create-comment:
